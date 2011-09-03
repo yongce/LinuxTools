@@ -1,0 +1,8 @@
+#!/bin/sh
+
+dir="."
+if [ $# -gt 0 ]; then
+    dir=$@
+fi
+
+nautilus $dir
