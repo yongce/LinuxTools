@@ -1,0 +1,22 @@
+[color]
+    ui = auto
+[user]
+    email = yongce.tu@gmail.com
+    name = Yongce Tu
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    dt = difftool
+[mergetool "extMerge"]
+    cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+    trustExitCode = false
+[diff]
+    tool = p4merge
+[difftool]
+    prompt = false
+[push]
+    default = tracking
+[core]
+    editor = vi
