@@ -1,0 +1,186 @@
+#1. Create a local git repository
+$ mkdir TestProject.git
+$ cd TestProject.git
+$ git init --bare
+(Done. The local git repository URL is the absolute path of it.)
+
+#2. Special usage of git diff
+$ git diff --stat           ---> "stat" option only list statistical info (file name and so on)
+$ git diff --name-status    ---> only file name and status
+$ git diff <A>...<B>        ---> equivalent to $(git-merge-base A B) B
+
+#3. Unstage files
+$ git reset HEAD [-- <the files>]
+
+$4. Special usages of git log
+#4.1 View graph of the branches and tags
+$ git log --oneline --decorate --graph [-<n>]
+
+#4.2 Show sha1 & commit subject line & file names
+$ git log --oneline --name-only -<n>
+
+#4.3 Only show logs committed by some one
+$ git log --oneline --decorate --author=<name>
+
+#4.4 More usages
+$ git log --oneline --decorate --after={2010-12-01}
+$ git log --grep=<msg>
+$ git log --oneline -<n> <branch name>
+Options:
+  --format="%h %an %s"      ----> <sha> <author> <subject line message>
+
+#5. Check if there are local commits which are not pushed to the remote branch
+$ git cherry <remote repository>/<branch name>
+
+
+--------------------------------------------------------------------------------
++ Git Commands Basic
+--------------------------------------------------------------------------------
+$ git branch                                ----> list all local branches
+$ git branch -r                             ----> list all remote branches
+$ git branch -a                             ----> list both local and remote branches
+$ git branch -v                             ----> list & Show sha1 and commit subject line for each head
+$ git branch <new branch name>              ----> create a new branch
+$ git branch -d <branch name>               ----> delete an existing branch
+$ git branch --contains <commit SHA1>       ----> Search branches
+
+$ git checkout <branch name>                ----> switch to the specified branch
+$ git checkout -b <new branch name>         ----> create a branch and switch to it
+$ git checkout <commit sha or tag> <file>   ----> checkout specified file with specified version
+
+$ git add .
+$ git add file1 file2
+
+$ git status
+$ git status -s
+
+$ git diff                        ---> between working tree and staged (unstaged changes)
+$ git diff --stat                 ---> "stat" option only list statistical info (file name and so on)
+$ git diff --name-status            ---> only file name and status
+
+$ git diff --cached               ---> between staged and HEAD> (staged changes)
+$ git diff --cached <commit>      ---> between staged and the <commit>
+
+$ git diff HEAD                   ---> between working tree and HEAD (both unstaged and staged changes)
+$ git diff <commit>               ---> between working tree and the <commit>
+
+$ git diff <commit1> <commit2>     ---> between two arbitrary commits
+$ git diff <A>...<B>               ---> equivalent to $(git-merge-base A B) B
+
+$ git commit -m "this is the log info" 
+$ git commit -am "this is the log info"     ----> state the tracked files automatically
+
+$ git reset HEAD -- <file list>             ----> unstage the specified staged files
+$ git reset HEAD                            ----> unstage all staged files
+$ git reset HEAD --hard                     ----> discard all changes in stage area and working tree
+$ git reset HEAD^                           ----> cancel the last commit ("--soft" by default)
+
+
+(Note: 'git mv' apply to the index)
+$ git mv -n                                ----> Don’t actually remove anything, just show what would be done.
+$ git mv <src> <dest>                      ----> Rename a file, symlink or directory
+$ git mv <src>...<dest directory>          ----> Move the sources to the specified directory
+
+--->todo more
+(Note: 'git rm' apply to the index and/or the working tree)
+$ git rm [options] [--] <file list>        ----> Remove files from the working tree and from the index
+$ git rm -n                                ----> Don’t actually remove anything, just show what would be done.
+$ git rm -r                                ----> Allow recursive removal when a leading directory name is given
+$ git rm --cached                          ----> only remove files from the index
+
+
+(Note: 'git clean' apply to the working tree)
+$ git clean -n                              ----> Don’t actually remove anything, just show what would be done.
+$ git clean -f                              ----> Remove untracked files from the working tree (recursively)
+$ git clean -x                              ----> also remove ignored files
+$ git clean -X                              ----> only remove ignored files
+$ git clean -d                              ----> also remove directories
+
+
+$ git log --oneline --decorate --graph -<n>        ----> Show sha1 and commit subject line for each commit, equivalent to "--pretty=oneline --abbrev-commit"
+$ git log --oneline --name-only -<n>               ----> Show sha1 & commit subject line & file names
+$ git log --oneline --decorate --author=<name>     ----> Only show logs committed by some one
+$ git log --oneline --decorate --after={2010-12-01}
+$ git log --grep=<msg>
+$ git log --oneline -<n> <branch name>
+Options:
+  --format="%h %an %s"      ----> <sha> <author> <subject line message>
+
+
+$ git remote -v                             ----> list all remote tracked repositories
+$ git remote add <alias name> <URL>
+$ git remote rename <old name> <new name>
+$ git remote rm <name>
+
+
+$ git fetch <repository alias name or URL>           ----> fetch all things
+$ git fetch <repository alias name or URL> --tags    ----> only tags are fetched
+Options:
+  --dry-run                                 ----> Show what would be done, without making any changes.
+
+
+$ git push <repository alias name or URL> <local branch>:<remote branch>
+$ git push <repository alias name or URL> <local branch>                     ----> the remote branch is the same to <local branch>
+$ git push <repository alias name or URL> <tag>
+
+$ git stash
+$ git stash apply
+
+$ git show <commit or branch or tag>
+$ git cherry <remote repository>/<branch name>       ----> check if there are local commits which are not pushed to the remote branch
+
+
+--------------------------------------------------------------------------------
+--- tag ---
+
++ List tags
+$ git tag    ----> equivalent to "git tag -l [<pattern>]"
+
++ Create tag
+$ git tag <tag name> [-a ] [-m <message>]
+
++ Delete tag
+$ git tag -d <tag name>
+
++ Search tags
+$ git tag --contains <commit SHA1>
+
++ Retag
+$ git tag -f <tag name> [-a ] [-m <message>]     ----> should only apply to local
+
++ Push tag
+$ git push <remote repository name> <tag name>
+
+--------------------------------------------------------------------------------
+<repository>
+           The "remote" repository that is destination of a push operation.
+           This parameter can be either a URL (see the section GIT URLS below)
+           or the name of a remote (see the section REMOTES below).
+
+       <refspec>...
+       
+Note: <tag name> format is in form of "[+]<src>[:dest]"
+
+The <src> is often the name of the branch you would want to push,
+           but it can be any arbitrary "SHA-1 expression", such as master~4 or
+           HEAD (see git-rev-parse(1)).
+
+           The <dst> tells which ref on the remote side is updated with this
+           push. Arbitrary expressions cannot be used here, an actual ref must
+           be named. If :<dst> is omitted, the same ref as <src> will be
+           updated.
+           
+The object referenced by <src> is used to update the <dst>
+           reference on the remote side, but by default this is only allowed
+           if the update can fast-forward <dst>. By having the optional
+           leading +, you can tell git to update the <dst> ref even when the
+           update is not a fast-forward. This does not attempt to merge <src>
+           into <dst>. See EXAMPLES below for details.
+
+tag <tag> means the same as refs/tags/<tag>:refs/tags/<tag>.
+
+<refspec> examples:
+HEAD:merge
+merge:merge
+
+
