@@ -1,0 +1,2 @@
+#!/bin/sh
+/home/yongce/tools/p4v/bin/p4merge $*

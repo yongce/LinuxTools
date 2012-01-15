@@ -8,6 +8,7 @@
     ci = commit
     st = status
     br = branch
+    df = diff
     dt = difftool
 [mergetool "extMerge"]
     cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
