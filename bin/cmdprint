@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Print command contents (esp. shell scripts)
+
+if [ $# -ne 1 ]; then
+    echo "Usage: cmdprint <command name>"
+    exit
+fi
+
+CMD_PATH=`which $1`
+if [ $? -ne 0 ]; then
+    echo "\"$1\" not found"
+    exit
+fi
+
+cat `which $1`
+
