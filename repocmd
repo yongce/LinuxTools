@@ -1,0 +1,138 @@
+--------------------------------------------------------------------------------
++ Repo Manifest File Structure
+<remote name="aosp"                                            ----> remote repository name
+        fetch=".."     ----> remote repository root directory
+        review="https://android-review.googlesource.com/" />              ----> gerrit URL used to review
+
+<default revision="refs/tags/android-4.2.1_r1"       ----> the default global version (branch or tag) used to checkout (repo start) for all projects
+         remote="aosp"              ----> the default global remote repository used to checkout for all projects
+                                    ----> repo will create a remote branch "m/<revision>" to refer "<remote>/<revision>"
+         sync-j="4" />              ----> How many threads will be used to sync the repository
+
+<project path="packages/wallpapers/MusicVisualization"               ----> local path
+         name="platform/packages/wallpapers/MusicVisualization"      ----> remote path
+         revision="863cb2e0b8f3e07e1143a9910045c1735ddfb5ab"/>       ----> the default revision for this project, which will override the global default one
+                                                                     ----> also, "m/<revision>" will refer the revision
+
+--------------------------------------------------------------------------------
++ Repo Commands Overview
+(1) init              ----> initialize the repository
+(2) sync              ----> sync the repository
+(3) status
+(4) diff
+(5) branches
+(6) start             ----> create a branch
+(7) checkout          ----> switch to a branch
+(8) prune             ----> remove the current branch (safe)
+(9) abandon           ----> remove the current branch (unsafe)
+(10) forall           ----> execute a command for all projects
+
+--------------------------------------------------------------------------------
++ init
+$ repo init [-u <URL which specify the remote manifest repository>]
+            [-b <the branch in the manifest repository>]
+            [-m <the XML file in the manifest repository>]   ----> "default.xml" by default
+
+Details:
+(1) Download manifest repository
+(2) Download repo source code
+
+When "init" finish, the ".repo" folder will be created.
+
+For an existing repository, use "repo init -b <branch or tag>" to switch to another android version.
+
+--------------------------------------------------------------------------------
++ sync
+$ repo sync [projects' local relative paths] [-j<n>]
+
+＊ 优先根据manifest中project revision确定版本，其次是default revision
+＊ 默认checkout出的版本，都在(no branch)
+＊ 需要保证本地工作目录干净再做sync，否则会失败
+
+特别注意：
+repo sync会尽一切办法将本地正在使用的branch更新到指定的版本。
+＊ repo sync首先会更新本地库(git fetch)
+＊ 如果当前分支在no branch，或未track指定revision(非repo start创建), 自动切换到no branch，并更新到指定revision
+＊ 如果当前分支track指定revision(repo start创建),
+        若该分支无改动，直接fast-forward到指定revision
+        若该分支有改动，自动跟指定revision进行merge
+
+--------------------------------------------------------------------------------
++ status
+
+列出信息：
+* 修改项目
+* 修改文件
+* 当前分支
+* 与 m/revision 的差异
+
+--------------------------------------------------------------------------------
++ diff
+
+查看当前源码详细修改状态(封装git diff)
+列出信息：
+* 修改项目
+* 文件详细修改
+
+--------------------------------------------------------------------------------
++ branches
+
+查看当前项目分支情况:
+当前若无任何分支(Clean)状态，返回no branch
+否则返回当前分支状态(分支---- 项目)
+
+--------------------------------------------------------------------------------
++ start
+
+新建分支。分支自动track manifest中指定revision
+
+--------------------------------------------------------------------------------
++ checkout
+
+切换另一分支
+
+--------------------------------------------------------------------------------
++ prune
+
+进行分支整理。自动删除提交回远程库的分支，保留其他。
+
+--------------------------------------------------------------------------------
++ abandon
+
+强制删除指定的分支
+
+--------------------------------------------------------------------------------
+定义状态：
+Clean:      repo status查看无修改，repo branches返回no branch。推荐在此状态进行repo sync。
+Clean-Dev:  repo status查看无修改，repo branches返回目前分支状态。 开发状态，所有修改已提交到本地，可能已经提交到远程库。
+Dirty-Dev:  repo status查看有修改，repo branches返回目前分支状态。 开发进行状态，正在进行修改
+Dirty:      repo status查看有修改，repo branches返回no branch。 此状态应避免出现，修改应先建立开发分支再修改。
+
+简单开发流程：
+Clean ---> Clean-Dev ---> Dirty-Dev ---> Clean-Dev ---> Clean
+1. 在Clean状态进行repo sync，更新代码
+2. Clean ---> Clean-Dev, 通过repo start创建开发分支
+3. 进行开发，导致Clean-Dev ---> Dirty-Dev
+4. 将开发结果进行本地提交，恢复Clean-Dev
+5. 确保远程提交后，通过repo prune尝试恢复Clean状态。如果失败，检查是否有改动需要提交到远程，提交之；否则通过repo abandon强制恢复Clean状态。如果失败，考虑手工清理不需要的分支，恢复Clean状态。
+该操作流程可以保证基于repo开发简单可靠进行，仅供参考。
+
+技巧：
+＊Clean状态可以确保repo sync成功完成。熟练后，完成远程提交的情况下，在Clean-Dev也可以使用repo sync。
+＊repo prune能够自动清理已经提交回远程库的分支。一般请在Clean-Dev状态使用该命令，可以快速找出自己残留未提交改动的分支。
+＊repo abandon同样在Clean-Dev下使用，强制清除指定分支，不管是否已经提交回远程库。
+--------------------------------------------------------------------------------
+
+＊repo forall对所有项目执行同一操作，可以灵活使用
+repo forall [<project>...] -c <command> [<arg>...]
+command请使用单引号包含
+
+可用环境变量：
+pwd指向当前工作目录
+REPO_PROJECT是当前project在服务器库中的相对路径(也称project name)
+REPO_PATH是当前project本地工作目录的相对路径
+REPO_REMOTE是当前project的库名
+REPO_LREV 是当前project revision版本的SHA1
+REPO_RREV 是当前project的revision
+
+
