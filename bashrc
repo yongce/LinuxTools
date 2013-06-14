@@ -24,3 +24,14 @@ Android_SDK_Platform_Tools=/home/pub/tools/android-sdk-linux_x86/platform-tools
 Android_NDK=/home/pub/tools/android-ndk-r7
 export PATH=$Android_SDK_Tools:$Android_SDK_Platform_Tools:$Android_NDK:$PATH
 
+#5. Dump certs from APK
+function dumpcert() {
+    CERT_FILE=`unzip -l $1 | grep META-INF | grep RSA | awk '{print $4}'`
+    echo [`unzip -p $1 ${CERT_FILE} | keytool -printcert | grep SHA1\: | sed 's|SHA1:||g' | sed "s|\t ||g"`] = $1
+}
+
+function dumpcertfull() {
+    CERT_FILE=`unzip -l $1 | grep META-INF | grep RSA | awk '{print $4}'`
+    unzip -p $1 ${CERT_FILE} | keytool -printcert
+}
+
