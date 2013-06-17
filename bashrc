@@ -19,8 +19,8 @@ export USE_CCACHE=1
 export CCACHE_DIR="/home/yongce/work/.ccache"
 
 #4. Set Env for Android SDK Tools
-Android_SDK_Tools=/home/pub/tools/android-sdk-linux_x86/tools
-Android_SDK_Platform_Tools=/home/pub/tools/android-sdk-linux_x86/platform-tools
+Android_SDK_Tools=/home/pub/tools/android-sdk-linux/tools
+Android_SDK_Platform_Tools=/home/pub/tools/android-sdk-linux/platform-tools
 Android_NDK=/home/pub/tools/android-ndk-r7
 export PATH=$Android_SDK_Tools:$Android_SDK_Platform_Tools:$Android_NDK:$PATH
 
