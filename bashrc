@@ -19,10 +19,10 @@ export USE_CCACHE=1
 export CCACHE_DIR="/home/yongce/work/.ccache"
 
 #4. Set Env for Android SDK Tools
-Android_SDK_Tools=/home/pub/tools/android-sdk-linux/tools
-Android_SDK_Platform_Tools=/home/pub/tools/android-sdk-linux/platform-tools
+Android_SDK_Root=/home/pub/tools/android-sdk-linux
+Android_SDK_Dirs=$Android_SDK_Root/tools:$Android_SDK_Root/platform-tools:$Android_SDK_Root/build-tools
 Android_NDK=/home/pub/tools/android-ndk-r7
-export PATH=$Android_SDK_Tools:$Android_SDK_Platform_Tools:$Android_NDK:$PATH
+export PATH=$Android_SDK_Dirs:$Android_NDK:$PATH
 
 #5. Dump certs from APK
 function dumpcert() {
@@ -35,3 +35,6 @@ function dumpcertfull() {
     unzip -p $1 ${CERT_FILE} | keytool -printcert
 }
 
+#6. Android Studio
+Android_Studio_Root=/home/pub/tools/android-studio
+export PATH=$Android_Studio_Root/bin:$PATH
