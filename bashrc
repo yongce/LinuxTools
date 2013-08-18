@@ -20,7 +20,7 @@ export CCACHE_DIR="/home/yongce/work/.ccache"
 
 #4. Set Env for Android SDK Tools
 Android_SDK_Root=/home/pub/tools/android-sdk-linux
-Android_SDK_Dirs=$Android_SDK_Root/tools:$Android_SDK_Root/platform-tools:$Android_SDK_Root/build-tools
+Android_SDK_Dirs=$Android_SDK_Root/tools:$Android_SDK_Root/platform-tools
 Android_NDK=/home/pub/tools/android-ndk-r7
 export PATH=$Android_SDK_Dirs:$Android_NDK:$PATH
 
