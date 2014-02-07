@@ -1,0 +1,9 @@
+#!/bin/sh
+
+theDate=""
+if [ $# -gt 0 ]; then
+    theDate="--date=@$@"
+fi
+
+date $theDate +"%Y-%m-%d %H:%M:%S %Y-%m-%d-%H-%M-%S-%s"
+
