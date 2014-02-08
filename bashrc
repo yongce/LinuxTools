@@ -23,7 +23,7 @@ Android_SDK_Root=/home/pub/tools/android-sdk-linux
 Android_SDK_BuildTools=$Android_SDK_Root/build-tools
 Android_SDK_BuildTools_SubPath=`ls $Android_SDK_BuildTools | sort | tail -1`
 Android_SDK_Dirs=$Android_SDK_Root/tools:$Android_SDK_Root/platform-tools:$Android_SDK_BuildTools/$Android_SDK_BuildTools_SubPath
-Android_NDK=/home/pub/tools/android-ndk-r7
+Android_NDK=/home/pub/tools/android-sdk-linux/ndk/android-ndk
 export PATH=$Android_SDK_Dirs:$Android_NDK:$PATH
 
 #5. Dump certs from APK
