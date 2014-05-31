@@ -42,3 +42,8 @@ function dumpcertfull() {
 #6. Android Studio
 Android_Studio_Root=/home/pub/tools/android-studio
 export PATH=$Android_Studio_Root/bin:$PATH
+
+#7. Gradle
+Gradle_Root=/home/pub/gradle
+export path=$Gradle_Root/bin:$PATH
+
