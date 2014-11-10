@@ -5,13 +5,17 @@ function parse_git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
-#2. Aliases for cd
+#2. Aliases
 alias .1='cd ..'
 alias .2='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias .6='cd ../../../../../..'
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 
 #3. Setup ccache for Android building
 # The last step is to execute 'prebuilt/linux-x86/ccache/ccache -M 20G
