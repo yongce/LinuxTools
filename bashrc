@@ -2,7 +2,8 @@
 PS1='[PWD: ${debian_chroot:+($debian_chroot)}\w]  $(parse_git_branch)\n$ '
 
 function parse_git_branch {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    git rev-parse --abbrev-ref HEAD
+    #git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
 #2. Aliases
@@ -23,7 +24,12 @@ export USE_CCACHE=1
 export CCACHE_DIR="/home/yongce/work/.ccache"
 
 #4. Set Env for Android SDK Tools
-Android_SDK_Root=/home/pub/tools/android-sdk-linux
+kernal_name=`uname -s`
+if [ $kernal_name = "Darwin" ]; then
+    Android_SDK_Root=/Users/pub/tools/android-sdk
+else
+    Android_SDK_Root=/home/pub/tools/android-sdk
+fi
 Android_SDK_BuildTools=$Android_SDK_Root/build-tools
 Android_SDK_BuildTools_SubPath=`ls $Android_SDK_BuildTools | sort | tail -1`
 Android_SDK_Dirs=$Android_SDK_Root/tools:$Android_SDK_Root/platform-tools:$Android_SDK_BuildTools/$Android_SDK_BuildTools_SubPath
@@ -52,3 +58,8 @@ export PATH=$Android_Studio_Root/bin:$PATH
 Gradle_Root=/home/pub/tools/gradle
 export PATH=$Gradle_Root/bin:$PATH
 
+#8 Export HTTP proxy
+alias exportHttpProxy='export HTTP_PROXY=127.0.0.1:8118 && export HTTPS_PROXY=127.0.0.1:8118'
+
+#9 Git log graph
+alias showGitGraph='git log --oneline --graph --decorate'
