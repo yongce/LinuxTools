@@ -1,21 +1,38 @@
+" Show the cursor position info
+set ruler
+
+" Hightlight the syntax
+syntax on
+
+" Insert space characters when the tab key pressed
+set expandtab
+" Set the number of space characters inserted when the tab key pressed
+set tabstop=4
+" Set the number of space characters inserted for indentation
+set shiftwidth=4
+" To change all the existing tab characters corresponding the current settings
+" retab
+
+
+"""""""""""""""""""""""""""""""""""""""""""""
+" TODO The following setings are not checked!
+"""""""""""""""""""""""""""""""""""""""""""""
+
 "显示行尾的空格
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 
 set foldmethod=marker
-set expandtab
 "let g:winManagerWindowLayout='TagList|FileExplorer'
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let g:Tlist_Use_Right_Window=1
 syntax enable
-syntax on
 filetype plugin indent on
 set completeopt=longest,menu
 set shiftwidth=4
 set mouse=i
 set nu
-set tabstop=4               " 设定 tab 长度为 4
 "smartcase，这样搜索时默认不区分大小写，只有搜索关键字中出现一个大字母时才区分大小写
 set ignorecase smartcase
 set autowrite
@@ -33,11 +50,11 @@ set so=7
 if has("autocmd")
 "autocmd Filetype java setlocal omnifunc=javacomplete#Complete
 autocmd Filetype java set omnifunc=javacomplete#Complete
-"Set 'completefunc' option to show parameters information IF YOU LIKE. e.g. 
-"setlocal completefunc=javacomplete#CompleteParamsInfo  
+"Set 'completefunc' option to show parameters information IF YOU LIKE. e.g.
+"setlocal completefunc=javacomplete#CompleteParamsInfo
 endif
 
-inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P> 
+inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
 inoremap <buffer> <C-S-Space> <C-X><C-U><C-P>
 
 
@@ -77,12 +94,12 @@ nmap <C-D> dd
 imap <C-D> <ESC>ddi
 map <C-D> dd
 
-"Exit 
+"Exit
 nmap <C-E> :qa<CR>
 imap <C-E> :qa<CR>
 map <C-E> :qa<CR>
 
-"Save Exit 
+"Save Exit
 nmap <C-W> :wqa<CR>
 imap <C-W> :wqa<CR>
 map <C-W> :wqa<CR>
@@ -128,5 +145,4 @@ nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR> 
-
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
