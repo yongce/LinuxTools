@@ -59,7 +59,7 @@ Gradle_Root=/home/pub/tools/gradle
 export PATH=$Gradle_Root/bin:$PATH
 
 #8 Export HTTP proxy
-alias exportHttpProxy='export HTTP_PROXY=127.0.0.1:8118 && export HTTPS_PROXY=127.0.0.1:8118'
+alias exportHttpProxy='export HTTP_PROXY=127.0.0.1:8118 && export HTTPS_PROXY=127.0.0.1:8118 && export http_proxy=127.0.0.1:8118 & export https_proxy=127.0.0.1:8118'
 
 #9 Git log graph
 alias showGitGraph='git log --oneline --graph --decorate'
