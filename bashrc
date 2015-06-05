@@ -1,3 +1,6 @@
+#0. Add "~/bin" to PATH
+export PATH=~/bin:$PATH
+
 #1. Show git branch in shell prompt when possible
 PS1='[PWD: ${debian_chroot:+($debian_chroot)}\w]  $(parse_git_branch)\n$ '
 
