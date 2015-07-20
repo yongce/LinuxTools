@@ -29,14 +29,15 @@ export CCACHE_DIR="/home/yongce/work/.ccache"
 #4. Set Env for Android SDK Tools
 kernal_name=`uname -s`
 if [ $kernal_name = "Darwin" ]; then
-    Android_SDK_Root=/Users/pub/tools/android-sdk
+    TOOLS_ROOT=/Users/pub/tools
 else
-    Android_SDK_Root=/home/pub/tools/android-sdk
+    TOOLS_ROOT=/home/pub/tools
 fi
+Android_SDK_Root=$TOOLS_ROOT/android-sdk
 Android_SDK_BuildTools=$Android_SDK_Root/build-tools
 Android_SDK_BuildTools_SubPath=`ls $Android_SDK_BuildTools | sort | tail -1`
 Android_SDK_Dirs=$Android_SDK_Root/tools:$Android_SDK_Root/platform-tools:$Android_SDK_BuildTools/$Android_SDK_BuildTools_SubPath
-Android_NDK=/home/pub/tools/android-sdk-linux/ndk/android-ndk
+Android_NDK=$TOOLS_ROOT/android-ndk
 export PATH=$Android_SDK_Dirs:$Android_NDK:$PATH
 export ANDROID_NDK_HOME=$Android_NDK
 export ANDROID_HOME=$Android_SDK_Root
