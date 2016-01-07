@@ -24,7 +24,7 @@ alias l='ls -CF'
 #3. Setup ccache for Android building
 # The last step is to execute 'prebuilt/linux-x86/ccache/ccache -M 20G
 export USE_CCACHE=1
-export CCACHE_DIR="/home/yongce/work/.ccache"
+export CCACHE_DIR="$HOME/work/.ccache"
 
 #4. Set Env for Android SDK Tools
 kernal_name=`uname -s`
