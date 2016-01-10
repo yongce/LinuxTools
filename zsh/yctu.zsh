@@ -1,3 +1,6 @@
+#0. Add "~/bin" to PATH
+export PATH=~/bin:$PATH
+
 #1. Aliases
 alias .1='cd ..'
 alias .2='cd ../..'
