@@ -66,4 +66,5 @@ if ! $IS_MAC_OS; then # for Linux only
 fi
 export GOPATH=$HOME/gowork
 export GOBIN=$GOPATH/bin
+export PATH=$GOBIN:$PATH
 
