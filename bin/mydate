@@ -1,9 +1,18 @@
 #!/bin/sh
 
+kernel_name=`uname -s`
+IS_MAC_OS=false
+if [ $kernel_name = "Darwin" ]; then
+    IS_MAC_OS=true
+fi
+
 theDate=""
 if [ $# -gt 0 ]; then
-    theDate="--date=@$@"
+    if $IS_MAC_OS ; then
+        theDate="-r $@"
+    else
+        theDate="--date=@$@"
+    fi
 fi
 
 date $theDate +"%Y-%m-%d %H:%M:%S %Y-%m-%d-%H-%M-%S-%s"
-
