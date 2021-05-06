@@ -21,3 +21,4 @@
     default = tracking
 [core]
     editor = vi
+    pager = "less -F -X"
