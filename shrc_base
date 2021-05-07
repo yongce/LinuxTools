@@ -75,3 +75,13 @@ alias java8='export JAVA_HOME=$JAVA_8_HOME'
 alias java11='export JAVA_HOME=$JAVA_11_HOME'
 # default to Java 8
 java8
+
+#10 Mount the android file image on MacOS
+# Refer: https://source.android.com/setup/build/initializing#creating-a-case-sensitive-disk-image
+funtion mountAndroid() {
+    hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android
+}
+
+function unmountAndroid() {
+    hdiutil detach /Volumes/android
+}
