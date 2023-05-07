@@ -54,7 +54,7 @@ fi
 
 #6 Export HTTP proxy
 alias exportHttpProxy='export HTTP_PROXY=127.0.0.1:1087 && export HTTPS_PROXY=127.0.0.1:1087 && export http_proxy=127.0.0.1:1087 && export https_proxy=127.0.0.1:1087'
-alias exportGitProxy='export ALL_PROXY=socks5://127.0.0.1:1080'
+alias exportAllProxy='export ALL_PROXY=socks5://127.0.0.1:1080 && export all_proxy=socks5://127.0.0.1:1080'
 
 #7 Git log graph
 alias showGitGraph='git log --oneline --graph --decorate'
