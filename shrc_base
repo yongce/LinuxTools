@@ -28,12 +28,14 @@ export CCACHE_DIR="$HOME/work/.ccache"
 #3. Set Env for Android SDK Tools
 TOOLS_ROOT=$HOME/tools
 Android_SDK_Root=$TOOLS_ROOT/android-sdk
-Android_SDK_BuildTools=$Android_SDK_Root/build-tools
-Android_SDK_BuildTools_SubPath=`ls $Android_SDK_BuildTools | sort | tail -1`
-Android_SDK_Dirs=$Android_SDK_Root/tools:$Android_SDK_Root/platform-tools:$Android_SDK_BuildTools/$Android_SDK_BuildTools_SubPath
-Android_NDK=$Android_SDK_Root/ndk-bundle
-export PATH=$Android_SDK_Dirs:$Android_NDK:$PATH
-export ANDROID_HOME=$Android_SDK_Root
+if [[ -d ${Android_SDK_Root} ]]; then
+    Android_SDK_BuildTools=$Android_SDK_Root/build-tools
+    Android_SDK_BuildTools_SubPath=`ls $Android_SDK_BuildTools | sort | tail -1`
+    Android_SDK_Dirs=$Android_SDK_Root/tools:$Android_SDK_Root/platform-tools:$Android_SDK_BuildTools/$Android_SDK_BuildTools_SubPath
+    Android_NDK=$Android_SDK_Root/ndk-bundle
+    export PATH=$Android_SDK_Dirs:$Android_NDK:$PATH
+    export ANDROID_HOME=$Android_SDK_Root
+fi
 
 #4. Dump certs from APK
 function dumpcert() {
@@ -69,14 +71,16 @@ export GOBIN=$GOPATH/bin
 export PATH=$GOBIN:$PATH
 
 #9 Switch JDK
-export JAVA_8_HOME=$(/usr/libexec/java_home -v1.8.0)
-export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
-export JAVA_17_HOME=$(/usr/libexec/java_home -v17)
-alias java8='export JAVA_HOME=$JAVA_8_HOME'
-alias java11='export JAVA_HOME=$JAVA_11_HOME'
-alias java17='export JAVA_HOME=$JAVA_17_HOME'
-# default to Java 8
-java17
+if [[ -f /usr/libexec/java_home ]]; then
+    export JAVA_8_HOME=$(/usr/libexec/java_home -v1.8.0)
+    export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
+    export JAVA_17_HOME=$(/usr/libexec/java_home -v17)
+    alias java8='export JAVA_HOME=$JAVA_8_HOME'
+    alias java11='export JAVA_HOME=$JAVA_11_HOME'
+    alias java17='export JAVA_HOME=$JAVA_17_HOME'
+    # default to Java 17
+    export JAVA_HOME=$JAVA_17_HOME
+fi
 
 #10 Mount the android file image on MacOS
 # Refer: https://source.android.com/setup/build/initializing#creating-a-case-sensitive-disk-image
